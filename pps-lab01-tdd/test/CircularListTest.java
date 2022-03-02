@@ -39,9 +39,12 @@ public class CircularListTest {
     void testNext(){
         assertEquals(Optional.empty(), circularList.next());
         circularList.add(1);
-        assertEquals(1, circularList.next().orElseThrow());
         circularList.add(2);
+        circularList.add(3);
+        assertEquals(1, circularList.next().orElseThrow());
         assertEquals(2, circularList.next().orElseThrow());
+        assertEquals(3, circularList.next().orElseThrow());
+        assertEquals(1, circularList.next().orElseThrow());
     }
 
     @Test
@@ -50,7 +53,12 @@ public class CircularListTest {
         circularList.add(1);
         assertEquals(1, circularList.previous().orElseThrow());
         circularList.add(2);
+        circularList.add(3);
+        assertEquals(3, circularList.previous().orElseThrow());
         assertEquals(2, circularList.previous().orElseThrow());
+        assertEquals(1, circularList.previous().orElseThrow());
+        assertEquals(3, circularList.previous().orElseThrow());
+
     }
 
     @Test
@@ -65,4 +73,25 @@ public class CircularListTest {
         circularList.reset();
         assertEquals(3, circularList.previous().orElseThrow());
     }
+
+    @Test
+    void testNextEven(){
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        circularList.add(4);
+        assertEquals(2, circularList.next(new evenStrategy()).orElseThrow());
+        assertEquals(4, circularList.next(new evenStrategy()).orElseThrow());
+        assertEquals(2, circularList.next(new evenStrategy()).orElseThrow());
+    }
+
+    @Test
+    void testNextEvenWithoutAnyMatch(){
+        circularList.add(1);
+        circularList.add(3);
+        circularList.add(5);
+        assertEquals(Optional.empty(), circularList.next(new evenStrategy()));
+    }
+
+    
 }

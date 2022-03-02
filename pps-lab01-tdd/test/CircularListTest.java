@@ -75,23 +75,37 @@ public class CircularListTest {
     }
 
     @Test
-    void testNextEven(){
+    void testNextEvenStrategy(){
         circularList.add(1);
         circularList.add(2);
         circularList.add(3);
         circularList.add(4);
-        assertEquals(2, circularList.next(new evenStrategy()).orElseThrow());
-        assertEquals(4, circularList.next(new evenStrategy()).orElseThrow());
-        assertEquals(2, circularList.next(new evenStrategy()).orElseThrow());
+        assertEquals(2, circularList.next(new EvenStrategy()).orElseThrow());
+        assertEquals(4, circularList.next(new EvenStrategy()).orElseThrow());
+        assertEquals(2, circularList.next(new EvenStrategy()).orElseThrow());
     }
 
     @Test
-    void testNextEvenWithoutAnyMatch(){
+    void testMultipleOfStrategy(){
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        circularList.add(4);
+        circularList.next();
+        assertEquals(2, circularList.next(new MulitpleOfStrategy(1)).orElseThrow());
+        assertEquals(4, circularList.next(new MulitpleOfStrategy(2)).orElseThrow());
+    }
+    
+    @Test
+    void testStrategyWithoutAnyMatch(){
         circularList.add(1);
         circularList.add(3);
         circularList.add(5);
-        assertEquals(Optional.empty(), circularList.next(new evenStrategy()));
+        assertEquals(Optional.empty(), circularList.next(new EvenStrategy()));
+        assertEquals(Optional.empty(), circularList.next(new MulitpleOfStrategy(2)));
     }
 
-    
+
+
+
 }

@@ -33,20 +33,12 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        if (this.list.size() == 0) {
-            return Optional.empty();
-        }
-        this.current = this.current + 1 > this.list.size() - 1 ? 0 : this.current + 1;
-        return Optional.of(this.list.get(this.current));
+        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(calculateNext()));
     }
 
     @Override
     public Optional<Integer> previous() {
-        if (this.list.size() == 0) {
-            return Optional.empty();
-        }
-        this.current = this.current - 1 < 0 ? this.list.size() - 1 : this.current - 1;
-        return Optional.of(this.list.get(this.current));
+        return this.isEmpty() ? Optional.empty() : Optional.of(this.list.get(calculatePrevious()));
     }
 
     @Override
@@ -59,5 +51,14 @@ public class CircularListImpl implements CircularList {
         return Optional.empty();
     }
 
+    private int calculatePrevious(){
+        this.current = this.current - 1 < 0 ? this.list.size() - 1 : this.current - 1;
+        return this.current;
+    }
+
+    private int calculateNext(){
+        this.current = this.current == -1 ? 0 : (this.size() % (this.current + 1)) + 1;
+        return this.current;
+    }
 
 }

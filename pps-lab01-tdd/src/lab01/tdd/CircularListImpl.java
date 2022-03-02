@@ -12,7 +12,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void add(int element) {
-
+        list.add(element);
     }
 
     @Override

@@ -95,7 +95,18 @@ public class CircularListTest {
         assertEquals(2, circularList.next(new MulitpleOfStrategy(1)).orElseThrow());
         assertEquals(4, circularList.next(new MulitpleOfStrategy(2)).orElseThrow());
     }
-    
+
+    @Test
+    void testEqualsStrategy(){
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        circularList.add(4);
+        circularList.next();
+        assertEquals(2, circularList.next(new EqualsStrategy(2)).orElseThrow());
+        assertEquals(4, circularList.next(new EqualsStrategy(4)).orElseThrow());
+    }
+
     @Test
     void testStrategyWithoutAnyMatch(){
         circularList.add(1);
@@ -103,9 +114,6 @@ public class CircularListTest {
         circularList.add(5);
         assertEquals(Optional.empty(), circularList.next(new EvenStrategy()));
         assertEquals(Optional.empty(), circularList.next(new MulitpleOfStrategy(2)));
+        assertEquals(Optional.empty(), circularList.next(new EqualsStrategy(2)));
     }
-
-
-
-
 }

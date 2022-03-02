@@ -18,31 +18,35 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void add(int element) {
-        list.add(element);
+        this.list.add(element);
     }
 
     @Override
     public int size() {
-        return list.size();
+        return this.list.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return list.isEmpty();
+        return this.list.isEmpty();
     }
 
     @Override
     public Optional<Integer> next() {
-        if (list.size() == 0) {
+        if (this.list.size() == 0) {
             return Optional.empty();
         }
-        current = current + 1 > list.size() - 1 ? 0 : current + 1;
-        return Optional.of(list.get(current));
+        this.current = this.current + 1 > this.list.size() - 1 ? 0 : this.current + 1;
+        return Optional.of(this.list.get(this.current));
     }
 
     @Override
     public Optional<Integer> previous() {
-        return current - 1 > 0  ? Optional.empty() : Optional.of(list.get(++current));
+        if (this.list.size() == 0) {
+            return Optional.empty();
+        }
+        this.current = this.current - 1 < 0 ? this.list.size() - 1 : this.current - 1;
+        return Optional.of(this.list.get(this.current));
     }
 
     @Override

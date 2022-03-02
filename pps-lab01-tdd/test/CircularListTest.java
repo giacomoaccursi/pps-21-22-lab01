@@ -39,20 +39,21 @@ public class CircularListTest {
     void testNext(){
         assertEquals(Optional.empty(), circularList.next());
         circularList.add(1);
-        circularList.add(2);
         assertEquals(1, circularList.next().orElseThrow());
+        circularList.add(2);
         assertEquals(2, circularList.next().orElseThrow());
     }
 
     @Test
     void testPrevious(){
-        assertEquals(Optional.empty(), circularList.next());
+        assertEquals(Optional.empty(), circularList.previous());
         circularList.add(1);
+        assertEquals(1, circularList.previous().orElseThrow());
         circularList.add(2);
-        assertEquals(1, circularList.next().orElseThrow());
-        assertEquals(2, circularList.next().orElseThrow());
-        assertEquals(1, circularList.next().orElseThrow());
+        assertEquals(2, circularList.previous().orElseThrow());
+
+
     }
 
-    
+
 }

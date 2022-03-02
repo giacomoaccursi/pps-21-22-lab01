@@ -17,7 +17,7 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public int size() {
-        return 0;
+        return list.size();
     }
 
     @Override

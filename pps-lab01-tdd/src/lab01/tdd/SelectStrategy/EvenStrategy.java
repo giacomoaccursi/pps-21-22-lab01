@@ -1,4 +1,4 @@
-import lab01.tdd.SelectStrategy;
+package lab01.tdd.SelectStrategy;
 
 public class EvenStrategy implements SelectStrategy {
     @Override

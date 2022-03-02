@@ -1,8 +1,8 @@
-import lab01.tdd.CircularList;
-import lab01.tdd.CircularListImpl;
+import lab01.tdd.*;
+import lab01.tdd.SelectStrategy.SelectStrategyFactory.SelectStrategyFactory;
+import lab01.tdd.SelectStrategy.SelectStrategyFactory.SelectStrategyFactoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,9 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CircularListTest {
 
     CircularList circularList;
+    SelectStrategyFactory selectStrategyFactory;
+
     @BeforeEach
     void beforeEach(){
         circularList = new CircularListImpl();
+        selectStrategyFactory = new SelectStrategyFactoryImpl();
     }
 
     @Test
@@ -80,9 +83,9 @@ public class CircularListTest {
         circularList.add(2);
         circularList.add(3);
         circularList.add(4);
-        assertEquals(2, circularList.next(new EvenStrategy()).orElseThrow());
-        assertEquals(4, circularList.next(new EvenStrategy()).orElseThrow());
-        assertEquals(2, circularList.next(new EvenStrategy()).orElseThrow());
+        assertEquals(2, circularList.next(selectStrategyFactory.createEvenStrategy()).orElseThrow());
+        assertEquals(4, circularList.next(selectStrategyFactory.createEvenStrategy()).orElseThrow());
+        assertEquals(2, circularList.next(selectStrategyFactory.createEvenStrategy()).orElseThrow());
     }
 
     @Test
@@ -92,8 +95,8 @@ public class CircularListTest {
         circularList.add(3);
         circularList.add(4);
         circularList.next();
-        assertEquals(2, circularList.next(new MulitpleOfStrategy(1)).orElseThrow());
-        assertEquals(4, circularList.next(new MulitpleOfStrategy(2)).orElseThrow());
+        assertEquals(2, circularList.next(selectStrategyFactory.createMultipleOfStrategy(2)).orElseThrow());
+        assertEquals(4, circularList.next(selectStrategyFactory.createMultipleOfStrategy(2)).orElseThrow());
     }
 
     @Test
@@ -103,8 +106,8 @@ public class CircularListTest {
         circularList.add(3);
         circularList.add(4);
         circularList.next();
-        assertEquals(2, circularList.next(new EqualsStrategy(2)).orElseThrow());
-        assertEquals(4, circularList.next(new EqualsStrategy(4)).orElseThrow());
+        assertEquals(2, circularList.next(selectStrategyFactory.createEqualsStrategy(2)).orElseThrow());
+        assertEquals(4, circularList.next(selectStrategyFactory.createEqualsStrategy(4)).orElseThrow());
     }
 
     @Test
@@ -112,8 +115,8 @@ public class CircularListTest {
         circularList.add(1);
         circularList.add(3);
         circularList.add(5);
-        assertEquals(Optional.empty(), circularList.next(new EvenStrategy()));
-        assertEquals(Optional.empty(), circularList.next(new MulitpleOfStrategy(2)));
-        assertEquals(Optional.empty(), circularList.next(new EqualsStrategy(2)));
+        assertEquals(Optional.empty(), circularList.next(selectStrategyFactory.createEvenStrategy()));
+        assertEquals(Optional.empty(), circularList.next(selectStrategyFactory.createMultipleOfStrategy(2)));
+        assertEquals(Optional.empty(), circularList.next(selectStrategyFactory.createEqualsStrategy(2)));
     }
 }

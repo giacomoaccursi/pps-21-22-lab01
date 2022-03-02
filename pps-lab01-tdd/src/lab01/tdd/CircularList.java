@@ -1,5 +1,7 @@
 package lab01.tdd;
 
+import lab01.tdd.SelectStrategy.SelectStrategy;
+
 import java.util.Optional;
 
 /**

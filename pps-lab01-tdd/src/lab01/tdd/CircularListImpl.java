@@ -1,16 +1,20 @@
 package lab01.tdd;
 
+import lab01.tdd.SelectStrategy.SelectStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
 
+    private static final int CURRENT_START = -1;
+
     List<Integer> list = new ArrayList<>();
     int current;
 
     public CircularListImpl() {
-        this.current = -1;
+        this.current = CURRENT_START;
     }
 
     @Override
@@ -40,15 +44,15 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public void reset() {
-        this.current = -1;
+        this.current = CURRENT_START;
     }
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
         Optional<Integer> element;
         do {
-            element = Optional.of(this.next().orElseThrow());
-            if(strategy.apply(element.get())){
+            element = this.next();
+            if(strategy.apply(element.orElseThrow())){
                 return element;
             }
         }
@@ -61,7 +65,7 @@ public class CircularListImpl implements CircularList {
     }
 
     private int calculatePrevious(){
-        this.current = this.current - 1 < 0 ? this.list.size() - 1 : this.current - 1;
+        this.current = this.current - 1 <  0 ? this.list.size() - 1 : this.current - 1;
         return this.current;
     }
 
@@ -69,5 +73,6 @@ public class CircularListImpl implements CircularList {
         this.current = (this.current + 1) % this.size() ;
         return this.current;
     }
+
 
 }

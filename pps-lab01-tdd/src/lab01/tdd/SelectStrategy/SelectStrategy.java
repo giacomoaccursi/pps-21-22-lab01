@@ -1,4 +1,4 @@
-package lab01.tdd;
+package lab01.tdd.SelectStrategy;
 
 /**
  * Represent a select Strategy to be applied to determine which is the next element to chose in a CircularList
